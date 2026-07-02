@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarryBee - Daily Shift Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEFDF8;
+            color: #1a1a1a;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto 32px;
+            padding: 0 8px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 22px;
+            font-weight: 800;
+            color: #1a1a1a;
+        }
+
+        .logo-bee {
+            color: #FFC700;
+            position: relative;
+        }
+
+        .logo-bee::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #FFC700;
+            border-radius: 50%;
+            top: -2px;
+            right: -10px;
+            opacity: 0.6;
+        }
+
+        .account-badge {
+            background: #FFC700;
+            color: #1a1a1a;
+            padding: 8px 20px;
+            border-radius: 24px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero {
+            max-width: 800px;
+            margin: 0 auto 32px;
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,199,0,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-label {
+            color: #FFC700;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            color: #fff;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .hero-desc {
+            color: rgba(255,255,255,0.7);
+            font-size: 15px;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .section { margin-bottom: 32px; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-number {
+            width: 28px;
+            height: 28px;
+            background: #FFC700;
+            color: #1a1a1a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width { grid-column: 1 / -1; }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a4a4a;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #E8E8E0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background: #FEFDF8;
+            color: #1a1a1a;
+            transition: all 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #FFC700;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(255,199,0,0.1);
+        }
+
+        input::placeholder, textarea::placeholder { color: #b0b0a8; }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: #FFC700;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #e6b300;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255,199,0,0.3);
+        }
+
+        .submit-btn:active { transform: translateY(0); }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            margin-top: 16px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status.show { display: flex; }
+        .status.success { background: #e8f5e9; color: #2e7d32; }
+        .status.error { background: #ffebee; color: #c62828; }
+        .status.loading { background: #fff8e1; color: #f57f17; }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f57f17;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .divider {
+            height: 1px;
+            background: #f0f0e8;
+            margin: 24px 0;
+        }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+            .hero { padding: 28px; }
+            .hero-title { font-size: 26px; }
+            .account-badge { font-size: 10px; padding: 6px 14px; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">carry<span class="logo-bee">bee</span></div>
+        <div class="account-badge">CarryBee Account Development</div>
+    </div>
+
+    <div class="hero">
+        <div class="hero-label">End of Shift</div>
+        <h1 class="hero-title">Daily Shift Report</h1>
+        <p class="hero-desc">At the end of the day, you will need to log all of your work progress.</p>
+    </div>
+
+    <div class="form-container">
+        <form id="shiftReportForm">
+
+            <!-- Section 1 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-number">1</div>
+                    <div class="section-title">Report Info</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teamMember">Team Member Name</label>
+                        <input type="text" id="teamMember" name="teamMember" placeholder="e.g. Rashid Ahmed" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Section 2 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-number">2</div>
+                    <div class="section-title">Orders</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="lastDayTotalOrder">Last Day Total Order</label>
+                        <input type="number" id="lastDayTotalOrder" name="lastDayTotalOrder" placeholder="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastDayNewOrder">Last Day New Order</label>
+                        <input type="number" id="lastDayNewOrder" name="lastDayNewOrder" placeholder="0" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Section 3 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-number">3</div>
+                    <div class="section-title">Leads & Field Activity</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="newApproachedLead">New Approached Lead</label>
+                        <input type="number" id="newApproachedLead" name="newApproachedLead" placeholder="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="followedUpLead">Followed Up Lead</label>
+                        <input type="number" id="followedUpLead" name="followedUpLead" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="visited">Visited</label>
+                        <input type="number" id="visited" name="visited" placeholder="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="newOnboarded">New Onboarded</label>
+                        <input type="number" id="newOnboarded" name="newOnboarded" placeholder="0" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Section 4 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <div class="section-title">Issue Management</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="totalIssueEscalated">Total Issue Escalated</label>
+                        <input type="number" id="totalIssueEscalated" name="totalIssueEscalated" placeholder="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="totalIssueSolved">Total Issue Solved</label>
+                        <input type="number" id="totalIssueSolved" name="totalIssueSolved" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="burningIssue">Burning Issue (if any)</label>
+                        <textarea id="burningIssue" name="burningIssue" placeholder="Describe any unresolved or urgent issue from the shift..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Submit Report</button>
+
+            <div class="status" id="status">
+                <span class="spinner" id="spinner" style="display:none;"></span>
+                <span id="statusText"></span>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Set today's date
+        document.getElementById('date').valueAsDate = new Date();
+
+        // Your deployed Google Apps Script Web App URL
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyE1KLak2CA-qrVw2VFDUWUEAVHa_OaC16czO_OOsEEAJVi798X3fttGaCQWG7GHu-Z/exec';
+
+        const form = document.getElementById('shiftReportForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusEl = document.getElementById('status');
+        const statusText = document.getElementById('statusText');
+        const spinner = document.getElementById('spinner');
+
+        function showStatus(msg, type) {
+            statusEl.className = 'status show ' + type;
+            statusText.textContent = msg;
+            spinner.style.display = type === 'loading' ? 'inline-block' : 'none';
+        }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            submitBtn.disabled = true;
+            showStatus('Submitting to Google Sheets...', 'loading');
+
+            const payload = {
+                date: document.getElementById('date').value,
+                teamMember: document.getElementById('teamMember').value,
+                lastDayTotalOrder: document.getElementById('lastDayTotalOrder').value || 0,
+                lastDayNewOrder: document.getElementById('lastDayNewOrder').value || 0,
+                newApproachedLead: document.getElementById('newApproachedLead').value || 0,
+                followedUpLead: document.getElementById('followedUpLead').value || 0,
+                visited: document.getElementById('visited').value || 0,
+                newOnboarded: document.getElementById('newOnboarded').value || 0,
+                totalIssueEscalated: document.getElementById('totalIssueEscalated').value || 0,
+                totalIssueSolved: document.getElementById('totalIssueSolved').value || 0,
+                burningIssue: document.getElementById('burningIssue').value
+            };
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.result === 'success') {
+                    showStatus('✅ ' + result.message, 'success');
+                    form.reset();
+                    document.getElementById('date').valueAsDate = new Date();
+                    setTimeout(() => statusEl.classList.remove('show'), 5000);
+                } else {
+                    showStatus('❌ Error: ' + result.message, 'error');
+                }
+            } catch (err) {
+                showStatus('❌ Failed to connect. Please check your internet and try again.', 'error');
+                console.error(err);
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
