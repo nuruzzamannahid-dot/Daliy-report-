@@ -387,8 +387,8 @@
         // Set today's date
         document.getElementById('date').valueAsDate = new Date();
 
-        // Your deployed Google Apps Script Web App URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyE1KLak2CA-qrVw2VFDUWUEAVHa_OaC16czO_OOsEEAJVi798X3fttGaCQWG7GHu-Z/exec';
+        // Your deployed backend API URL (Node/Express server connected to Turso)
+        const API_URL = 'https://daily-report-database.onrender.com/api/shift-report';
 
         const form = document.getElementById('shiftReportForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -423,7 +423,7 @@
             };
 
             try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     mode: 'cors',
                     headers: { 'Content-Type': 'application/json' },
